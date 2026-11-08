@@ -1,24 +1,32 @@
 # Tokens-Saver
 
-A collection of Claude Skills focused on reducing unnecessary token and context consumption while preserving accuracy and output quality.
+A collection of Claude Skills focused on reducing unnecessary token and context consumption while preserving accuracy, project continuity, and output quality.
 
 ## Skills
 
 | Skill | Purpose |
 |---|---|
-| [Token Saver](token-saver/) | General-purpose context and token efficiency for long-context, research, coding, and multi-file tasks. |
-| [OSCP Project Operator](oscp-project-operator/) | Project-specific operation of the OSCP-Exam-PoC vault and its instructor-facing website. |
+| [Token Saver](token-saver/) | Advanced general-purpose efficiency across chat, writing, research, analysis, coding, and tool use. Designed for Claude Free and does not depend on paid features. |
+| [Project Token Operator](project-token-operator/) | Project-specific execution: source-of-truth control, phase discipline, selective inspection, compact state, and verified handoffs. |
+| [OSCP Project Operator](oscp-project-operator/) | Dedicated operating rules for the OSCP-Exam-PoC vault and its instructor-facing website. |
 
 ## Install a Skill in Claude
 
-Each Skill is packaged in its own folder with a `SKILL.md` file.
+Each Skill has its own folder containing `SKILL.md` and optional supporting references/templates.
 
 1. Download or clone this repository.
 2. ZIP only the selected Skill folder, keeping that folder at the ZIP root.
-3. In Claude, open **Customize → Skills → Add → Upload a skill**.
+3. In Claude, open **Customize → Skills → + Create skill → Upload a skill**.
 4. Upload the ZIP and enable the Skill.
+5. Ensure **Code execution and file creation** is enabled under Claude Settings → Capabilities.
 
-Do not ZIP the repository root when installing one Skill; Claude expects the selected Skill folder to be the ZIP's top-level directory.
+Install each Skill once. Project-specific configuration files are supplied separately to the relevant project; do not create another Skill copy for every project.
+
+## Which Skill should I use?
+
+- **Token Saver:** General task efficiency across different kinds of work.
+- **Project Token Operator:** A designated, recurring project that needs controlled phases, source protection, and continuity across chats.
+- **OSCP Project Operator:** Only the OSCP-Exam-PoC project. Prefer it over the generic Project Token Operator inside that specific workspace.
 
 ## Design principle
 
