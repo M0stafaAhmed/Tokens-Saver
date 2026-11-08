@@ -1,6 +1,6 @@
 ---
 name: project-token-operator
-description: "Operate a designated long-running project efficiently: inspect its state, follow authorized tasks and phases, minimize repeated context, preserve source files, checkpoint progress, and verify deliverables."
+description: "Use for long-running projects: enforce task scope, inspect selectively, protect source files, maintain compact state, and verify phase deliverables."
 ---
 
 # Project Token Operator
