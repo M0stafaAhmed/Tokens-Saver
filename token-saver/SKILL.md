@@ -1,6 +1,6 @@
 ---
 name: token-saver
-description: "Reduces unnecessary context reads, tool output, and repeated work while preserving accuracy. Use for long-context, multi-file, research, or coding tasks, or when token efficiency is requested."
+description: "Apply across chat, writing, research, analysis, coding, and tool use to reduce unnecessary context, output, and repeated work without sacrificing accuracy."
 ---
 
 # Token Saver
@@ -11,9 +11,14 @@ Reduce unnecessary context consumption, retrieval, tool output, and repeated wor
 
 ## When to apply
 
-Apply this Skill when a task involves substantial conversation history, large files or repositories, multiple dependent steps, repeated tool use, research across sources, or explicit requests to conserve tokens.
+Use this Skill as a background efficiency discipline across ordinary conversation, writing, research, analysis, coding, and tool use.
 
-Do not add planning or process overhead to a simple question or small transformation. Use only the parts of this Skill that materially help the current task.
+Scale the method to the task:
+- Simple questions and small transformations need a direct answer, not a workflow.
+- Large files, repositories, long conversations, research across sources, repeated tool use, or multi-stage tasks justify selective retrieval, bounded outputs, focused validation, and compact checkpoints.
+- Explicit user requests for depth, exhaustive coverage, or full detail take precedence over default brevity.
+
+Do not add planning, tool calls, or process overhead when they do not improve the result.
 
 ## Operating rules
 
@@ -26,6 +31,15 @@ Do not add planning or process overhead to a simple question or small transforma
 7. **Make the smallest sufficient change.** Prefer targeted edits over full-file rewrites. Preserve existing structure and meaning. Do not create scripts, reports, temporary files, or new abstractions merely to save a few tokens.
 8. **Verify proportionately.** Select checks based on the risk and scope of the change. Run focused tests or validation, inspect the diff, and distinguish verified results from assumptions or untested work.
 9. **Return a useful result.** Give the outcome, material evidence, limitations, and next action when relevant. Keep the report compact, but never omit details needed to act or make a sound decision.
+
+## Response discipline
+
+- Lead with the answer, result, or requested artifact. Avoid unnecessary preambles and restating the request.
+- Match response length to the requested depth and the complexity of the deliverable.
+- Remove filler, repeated explanations, and information that does not change the user's understanding or next action.
+- Preserve caveats, citations, examples, implementation details, and explanations that are necessary for correctness or explicitly requested.
+- Ask for clarification when an unresolved detail could materially change the result or cause avoidable rework. Do not guess merely to avoid one question.
+- Optimize for the total effort and token use across the task, not for making the current response or tool output as short as possible.
 
 ## Preserve information
 

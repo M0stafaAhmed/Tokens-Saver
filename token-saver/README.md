@@ -1,36 +1,37 @@
 # Token Saver
 
-A general-purpose Claude Skill for reducing unnecessary context consumption and repeated work without sacrificing correctness.
+A general-purpose Claude Skill for reducing unnecessary context consumption, tool overhead, and repeated work across chat, writing, research, analysis, and coding.
 
 ## What it does
 
-- Uses targeted search and selective file reads instead of loading entire projects by default.
-- Bounds tool output and avoids repeating valid reads, searches, and checks.
-- Keeps edits scoped and validates only what changed unless broader verification is justified.
+- Uses relevant conversation context instead of retrieving the same information repeatedly.
+- Searches and reads selectively rather than loading large projects by default.
+- Bounds tool output and batches independent checks safely.
+- Keeps edits scoped and validates proportionately.
 - Uses compact checkpoints for multi-stage work when a context reset is likely.
 - Protects exact technical evidence, source data, and code from lossy compression.
+- Keeps response length proportional to the requested depth and the actual task.
 
-The Skill has no runtime dependencies and does not require bundled scripts.
+The Skill has no runtime dependencies and does not require bundled scripts, hooks, or subagents. Advanced integrations are never assumed.
 
 ## Install in Claude
 
 1. Download the `token-saver` folder or clone this repository.
 2. Create a ZIP containing the `token-saver` folder at the ZIP root. Do not ZIP the files without their containing folder.
 3. In Claude, open **Customize → Skills**.
-4. Choose **Add → Upload a skill** and upload the ZIP.
-5. Enable **Token Saver** if Claude presents an enable control.
+4. Select **+ Create skill → Upload a skill**.
+5. Upload the ZIP and enable the Skill.
 
-A ready-to-upload ZIP can also be generated from this folder without changing its contents.
+Claude decides when the Skill is relevant based on its description. To request it explicitly, start a task with: `Use Token Saver for this task.`
 
-## Use it
-
-Claude can select the Skill when a task matches its description. You can also invoke it explicitly with instructions such as:
+## Example prompts
 
 - "Use Token Saver while reviewing this repository. Inspect only relevant files and verify the final diff."
-- "Apply Token Saver to this multi-file documentation task. Keep exact evidence unchanged."
-- "Continue this project from its existing state file. Avoid rereading unchanged inputs."
+- "Apply Token Saver to this research task. Search in focused batches and retain citations for factual claims."
+- "Use Token Saver to shorten this document without removing technical meaning or exact evidence."
+- "Continue from the existing project state. Avoid rereading unchanged inputs."
 
-The Skill is intended for complex or context-heavy tasks. It should not add process overhead to simple requests.
+The Skill should not add process overhead to simple requests or shorten an answer when depth is required.
 
 ## Package contents
 
