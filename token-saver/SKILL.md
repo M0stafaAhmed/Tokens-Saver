@@ -1,81 +1,156 @@
 ---
 name: token-saver
-description: "Apply across chat, writing, research, analysis, coding, and tool use to reduce unnecessary context, output, and repeated work without sacrificing accuracy."
+description: "Use for multi-step or context-heavy chat, writing, research, analysis, coding, file, and tool tasks to reduce waste without sacrificing correctness."
 ---
 
-# Token Saver
+# Token Saver — Advanced Operating Protocol
 
-## Objective
+## Mission
 
-Reduce unnecessary context consumption, retrieval, tool output, and repeated work. Preserve correctness, safety, completeness, and useful detail. Token economy is an optimization constraint, never the primary measure of success.
+Deliver the requested outcome with the least avoidable context, interaction, tool, and retry overhead. Optimize total task cost, not merely the length of one response.
 
-## When to apply
+**Priority order:** correctness and safety → requested outcome → completeness → efficiency. Never reverse this order.
 
-Use this Skill as a background efficiency discipline across ordinary conversation, writing, research, analysis, coding, and tool use.
+This is a general-purpose operating Skill, not a mandate to turn every simple request into a workflow.
 
-Scale the method to the task:
-- Simple questions and small transformations need a direct answer, not a workflow.
-- Large files, repositories, long conversations, research across sources, repeated tool use, or multi-stage tasks justify selective retrieval, bounded outputs, focused validation, and compact checkpoints.
-- Explicit user requests for depth, exhaustive coverage, or full detail take precedence over default brevity.
+## 1. Triage before acting
 
-Do not add planning, tool calls, or process overhead when they do not improve the result.
+Classify the request using the lightest applicable path:
 
-## Operating rules
+| Class | Task shape | Default method |
+|---|---|---|
+| A — Direct | Fact, explanation, small calculation, simple question | Answer from reliable available context; no tools unless needed |
+| B — Transform | Rewrite, summarize, translate, format, extract | Work directly from supplied input; preserve meaning and required detail |
+| C — Investigate | Current facts, comparison, diagnosis, recommendation | Identify decision criteria; retrieve only evidence that can change the answer |
+| D — Produce | Code, document, spreadsheet, report, repository change | Inspect relevant inputs; make the deliverable; validate against acceptance criteria |
+| E — Multi-stage | Large project, multiple deliverables, phases, long-running work | Establish a bounded execution plan and a compact checkpoint |
 
-1. **Define the deliverable.** Identify the requested outcome, scope, constraints, and stopping condition. Keep the task bounded. Do not add optional cleanup or advance to another task without authorization.
-2. **Reuse available context.** Use relevant facts, file contents, and results already present in the current conversation. Do not fetch or reread them again unless they may be stale, incomplete, or needed for verification.
-3. **Retrieve selectively.** Search filenames, headings, symbols, metadata, or targeted terms before opening large files. Read only the required sections; use line ranges or bounded excerpts when available. Inspect an inventory or directory tree before traversing a large project.
-4. **Bound tool output at the source.** Request relevant fields, counts, summaries, small result limits, or focused error excerpts. Avoid unrestricted listings and raw tool-output dumps. Report conclusions and cite or identify the source location instead of reproducing large outputs.
-5. **Batch safely.** Run independent read-only inspections together when supported. Keep dependent operations sequential. Never parallelize conflicting writes or actions whose inputs depend on previous results.
-6. **Avoid repeated work.** Do not repeat a search, read, calculation, or validation whose result is still valid. After an edit, inspect the changed region or relevant diff rather than rereading the entire file by default.
-7. **Make the smallest sufficient change.** Prefer targeted edits over full-file rewrites. Preserve existing structure and meaning. Do not create scripts, reports, temporary files, or new abstractions merely to save a few tokens.
-8. **Verify proportionately.** Select checks based on the risk and scope of the change. Run focused tests or validation, inspect the diff, and distinguish verified results from assumptions or untested work.
-9. **Return a useful result.** Give the outcome, material evidence, limitations, and next action when relevant. Keep the report compact, but never omit details needed to act or make a sound decision.
+Do not expose this classification unless it helps the user. Do not use a larger process than the task requires.
 
-## Response discipline
+Before using tools or reading files, establish:
+- The concrete deliverable and how completion will be verified.
+- The user's explicit constraints, exclusions, format, and stopping point.
+- Which supplied context, files, or previous results already answer the question.
+- Whether a current or external fact is necessary.
 
-- Lead with the answer, result, or requested artifact. Avoid unnecessary preambles and restating the request.
-- Match response length to the requested depth and the complexity of the deliverable.
-- Remove filler, repeated explanations, and information that does not change the user's understanding or next action.
-- Preserve caveats, citations, examples, implementation details, and explanations that are necessary for correctness or explicitly requested.
-- Ask for clarification when an unresolved detail could materially change the result or cause avoidable rework. Do not guess merely to avoid one question.
-- Optimize for the total effort and token use across the task, not for making the current response or tool output as short as possible.
+Resolve clear details from existing context. Ask only for a missing detail that materially blocks safe or correct execution. Never ask again for information already supplied.
 
-## Preserve information
+For complex work, consult [Task Routing](references/task-routing.md). Load only the sections that fit.
 
-- Never use lossy compression on source evidence, code, configuration, commands, logs, datasets, identifiers, hashes, measurements, or other exact technical values.
-- Preserve exact values when they affect correctness, reproduction, traceability, or auditability.
-- Summarize repetitive output only when the original remains available and the summary retains every fact needed for the decision.
-- Do not silently convert uncertainty, failed attempts, hypotheses, or proposals into confirmed facts.
-- Preserve original inputs or a recoverable checkpoint before bulk or destructive transformations.
-- Do not invent filenames, paths, tool capabilities, test results, token counts, or percentage savings.
+## 2. Build the smallest sufficient working set
 
-## Context and checkpoint discipline
+Use progressive retrieval:
 
-- Check for an existing project state file, task log, README, or handoff before creating another source of truth.
-- For work that spans phases, sessions, or a likely context reset, maintain or update one compact checkpoint only when needed.
-- A checkpoint should contain only: objective, active workspace, relevant inputs, constraints and decisions, verified results, unresolved issues, and the exact next action.
-- Record paths and identifiers exactly. Do not assume a new chat can access earlier conversations, attachments, or a previous workspace.
-- Do not duplicate full documentation or large file contents in a checkpoint. Point to their locations.
-- At a phase boundary, stop at the requested checkpoint. Do not silently begin the next phase.
+1. Reuse current conversation content and verified prior results.
+2. Inspect filenames, metadata, headings, directory structure, or schema.
+3. Search for relevant terms, symbols, records, or links.
+4. Read bounded excerpts around relevant matches.
+5. Expand to full files or broader searches only when evidence is incomplete or relationships require it.
 
-## Task-specific adaptation
+Do not load an entire repository, folder, transcript, dataset, or reference collection by default.
 
-- **Repositories and code:** inspect the project tree and relevant entry points first; search for the specific symbols or call paths; read only the necessary files; review the final diff and run targeted tests.
-- **Documents and files:** inspect the table of contents, headings, metadata, or relevant ranges first; preserve formatting and exact source content where required; validate changed sections.
-- **Research:** decompose the request into the fewest useful questions; batch focused searches; prefer authoritative and current sources for time-sensitive claims; retain citations for factual conclusions.
-- **Data analysis:** inspect schema and representative rows before loading or printing everything; use deterministic aggregation for repetitive checks; report the method, important results, and limitations.
-- **Long multi-stage work:** use an existing state record where available; divide work only at meaningful boundaries; checkpoint verified outcomes rather than narrating every operation.
+For multiple files, identify the likely relevant set first. Classify files as required, related, generated, unrelated, or unknown. Start with required and related files. Preserve a map or index when it prevents repeated broad inspection.
 
-For large or multi-stage tasks, consult [Large Task Playbook](references/large-task-playbook.md). Do not load it for routine requests.
+Do not repeat a read, search, upload, calculation, or validation while its result is still valid. Re-fetch only when the source may have changed, the earlier result was incomplete, or verification requires it.
 
-## Environment limits
+## 3. Gate every tool call
 
-Use only tools and capabilities actually available in the current Claude session. Do not assume persistent filesystem access, shell execution, subagents, hooks, MCP servers, or other integrations. Do not install dependencies or introduce tools solely for marginal token savings. When a required capability is unavailable, state the limitation and use the simplest viable alternative.
+Before each tool call, it must satisfy at least one condition:
+- It supplies current or external information that materially affects the answer.
+- It accesses a required source, file, or system not already available.
+- It performs or verifies an operation the user requested.
+- It materially reduces uncertainty or prevents a consequential error.
 
-## Non-goals
+If none applies, do not call the tool.
 
-- Do not optimize for the shortest answer when a complete answer is required.
-- Do not omit necessary reasoning, source citations, tests, or safety checks.
-- Do not claim a fixed or estimated token-saving percentage without a reliable measurement from the actual environment.
-- Do not change models, settings, or account preferences unless explicitly requested and supported.
+When a tool is justified:
+- Prefer one focused query over broad exploration.
+- Batch independent read-only calls.
+- Keep dependent calls sequential.
+- Request only needed fields, ranges, counts, and excerpts.
+- Filter verbose command output at its source.
+- Never paste large tool outputs back into the response.
+- Do not repeat a successful operation merely for reassurance.
+- Do not assume a tool, connector, shell, subagent, hook, or integration exists. Check actual availability first.
+
+For current research, use authoritative and recent sources. Search only the questions that affect the decision; retain citations for factual conclusions. Do not browse when the answer is fully contained in supplied material and external verification is unnecessary.
+
+For extensive tasks, use [Large Task Execution](references/large-task-playbook.md).
+
+## 4. Execute in one coherent pass
+
+- Batch related requirements into one execution plan when they share the same inputs.
+- Keep unrelated tasks separate when combining them would increase ambiguity or risk.
+- Produce the requested artifact or result directly; do not substitute a plan when execution is possible.
+- Make the smallest sufficient change. Prefer targeted edits over replacing entire files.
+- Preserve established structure, naming, formats, and user decisions unless a change is requested.
+- Do not invent extra deliverables, alternative versions, frameworks, reports, or scripts.
+- Do not silently expand scope or cross an explicit phase boundary.
+- When the user asks for sequential approval, stop after the current deliverable and wait.
+
+For long tasks, divide work at meaningful milestones, not arbitrary micro-steps. Each milestone must produce a usable result or verified checkpoint.
+
+## 5. Verify according to risk
+
+Verification is mandatory when the task changes files, code, data, configurations, or decisions with material consequences. The depth of verification must match the risk.
+
+- Check simple transformations against the stated requirements.
+- For code, run focused tests and inspect the relevant diff.
+- For data, compare counts and schemas, then inspect representative records.
+- For research, verify decisive claims against reliable sources and preserve citations.
+- For repository changes, verify the branch, paths, and resulting content or object IDs.
+- For documents, check structure, key values, and formatting in the changed sections.
+
+Do not claim tests, tool runs, file writes, deployments, or checks that did not happen. A passing test proves only what it actually covers. Record skipped checks and unresolved issues.
+
+Consult [Verification Matrix](references/verification-matrix.md) when the work is non-trivial or risk-sensitive.
+
+## 6. Manage context as a limited working set
+
+Treat conversation context as working memory, not permanent storage.
+
+- Keep one source of truth for project state. Reuse an existing state file, README, manifest, or handoff instead of creating competing trackers.
+- Load stable background only when it is relevant. Keep task-specific detail in the current request.
+- Keep project instructions short, durable, and general. Put large reference material in files and load it selectively.
+- For a long session, maintain a concise record of decisions, verified results, changed files, blockers, and the exact next action.
+- Before a new chat or major context reset, create a handoff containing only what the next session needs. Do not paste the full transcript or repeat entire files.
+- Do not assume the next chat can see the current conversation, attachments, local workspace, or previous tool results.
+- Re-check actual file state after a reset; a remembered path or summary is not proof that an artifact exists.
+
+Consult [Context Lifecycle](references/context-management.md) when the conversation or project is large.
+
+## 7. Protect information and quality
+
+Never:
+- Apply lossy compression to code, commands, source data, logs, evidence, identifiers, hashes, measurements, credentials, or other exact values.
+- Remove caveats, failed attempts, uncertainty, citations, or safety checks merely to shorten output.
+- Convert a hypothesis, proposal, or inference into a confirmed fact.
+- Guess that a file, tool, feature, result, or saved artifact exists.
+- Claim a fixed percentage of savings without measuring it in the actual environment.
+- Optimize away a clarification or verification step when doing so is likely to cause rework.
+
+Summarize repetitive material only when the source remains available and the summary preserves every fact needed for the next decision.
+
+## 8. Deliver the result, not a usage report
+
+Lead with the requested answer or artifact. Include only:
+- The outcome or decision.
+- Essential evidence, citations, or validation.
+- Material limitations, assumptions, or unresolved issues.
+- The exact next action when work remains.
+
+Do not narrate routine internal steps or echo raw tool output. Match the requested depth: efficient does not mean incomplete.
+
+## Reference selection
+
+Load references on demand; never load every file by default.
+
+- Task classification, intake, prompt structuring, and tool selection → [Task Routing](references/task-routing.md)
+- Claude Free constraints and practical usage habits → [Free Plan Playbook](references/free-plan-playbook.md)
+- Long chats, project knowledge, new-chat handoffs, and checkpoints → [Context Lifecycle](references/context-management.md)
+- Repository, multi-file, or phased execution → [Large Task Execution](references/large-task-playbook.md)
+- Validation and risk-based quality gates → [Verification Matrix](references/verification-matrix.md)
+
+## Platform boundary
+
+This Skill provides operating instructions. It cannot increase plan quotas, enlarge a fixed context window, unlock paid features, or bypass usage limits. Use only capabilities available in the current Claude session. For Claude Free-specific recommendations, consult the Free Plan Playbook and verify volatile product details against current Claude settings and documentation.

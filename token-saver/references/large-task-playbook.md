@@ -1,109 +1,95 @@
-# Large Task Playbook
+# Large Task Execution Playbook
 
-Use this reference only when the task has a large working set, several phases, substantial tool use, or a meaningful risk of context loss.
+Load this reference for multi-file, repository, coding, research, or phased work that cannot be completed reliably in one simple pass.
 
-## 1. Establish the working set
+## 1. Establish the execution boundary
 
-Before reading content, identify:
+Write a compact internal task contract:
 
-- The requested deliverable and explicit exclusions.
-- The active repository, folder, or source of truth.
-- Existing inventories, status files, reports, tests, and prior decisions.
-- The smallest set of files or sources likely to determine the next action.
+- Deliverable.
+- Inputs and authoritative sources.
+- Permitted operations.
+- Prohibited operations.
+- Acceptance checks.
+- Stop condition.
 
-Do not inventory the same workspace repeatedly unless it may have changed.
+Respect explicit sequencing and approval gates. If the user says one task at a time, finish the current task and stop. Do not treat a related improvement as implicit authorization.
 
-## 2. Retrieve in layers
+## 2. Inspect before planning in detail
 
-Use this order where it fits the environment:
+Start with the cheapest useful view:
+- Repository root or directory listing.
+- README, manifest, project state, or index.
+- Relevant configuration and entry points.
+- Existing tests and validation scripts.
 
-1. List relevant directories or search filenames.
-2. Search for exact terms, symbols, headings, or references.
-3. Read the smallest useful excerpts around the matches.
-4. Expand to full files only when relationships, omitted context, or correctness require it.
-5. After a change, inspect the diff or changed range first.
+Then search for the actual symbols, filenames, headings, or data fields related to the request.
 
-When reviewing many files, classify them before opening them all: required, related, unrelated, generated, or unknown. Read required and related files first.
+Do not read every file just because it exists. Build the working set from observed relevance. Read unknown or related files only when dependencies or scope require them.
 
-## 3. Control tool calls
+## 3. Make a dependency-aware plan
 
-- Combine independent read-only checks into one batch when the tool supports it.
-- Keep read-after-write verification and other dependent operations sequential.
-- Ask tools to return only fields needed for the decision.
-- Limit search results and command output; narrow the query rather than repeatedly processing oversized results.
-- Avoid repeated broad searches. Refine a query using what the first result established.
-- Do not use a script for a one-off task when a direct, bounded operation is simpler.
-- Review a script before running it, especially if it can modify or delete files.
+Keep the plan to meaningful deliverables. For each one, identify:
+- Required inputs.
+- The smallest necessary operation.
+- Dependencies on earlier steps.
+- Verification method.
+- Whether it is reversible.
+- Stop condition.
 
-Example shell patterns, only when shell access exists and is appropriate:
+Batch independent read-only inspections. Sequence writes, dependent calls, builds, and tests. Never parallelize writes to the same file or branch.
 
-```bash
-# Find relevant files instead of printing the entire tree.
-find src -type f | sort | head -80
+## 4. Execute incrementally
 
-# Locate a symbol and then inspect only its surrounding code.
-rg -n "TargetSymbol" src
-sed -n '120,190p' src/path/to/file.py
+- Preserve the original input or a recoverable checkpoint before bulk or destructive changes.
+- Prefer a small targeted edit.
+- Avoid unrelated refactoring or cleanup.
+- Do not add dependencies or helper scripts unless they are necessary for the requested outcome.
+- Keep generated artifacts separate from source inputs when practical.
+- Capture useful outputs at source using filters, selected fields, line ranges, or summaries.
+- Stop and reassess when actual files contradict assumptions.
 
-# Review the size and substance of changes without dumping every file.
-git diff --stat
-git diff -- path/to/changed-file
-```
+Do not silently skip a failing step. Report the failure, its effect on the deliverable, and the next least-risk action.
 
-Adapt commands to the actual environment. Do not assume these utilities are installed.
+## 5. Use one reliable verification pass
 
-## 4. Choose validation by risk
+Choose checks that can catch the likely failure:
+- Inspect the diff for unintended scope.
+- Run targeted tests or validators.
+- Verify output files, commit refs, or destination paths.
+- Compare source and output counts, hashes, or stable identifiers where appropriate.
+- Check representative transformed records and edge cases.
 
-| Change or task | Efficient validation |
-|---|---|
-| Small text edit | Inspect the changed section and surrounding context |
-| Multi-file documentation change | Review changed files, links, and relevant metadata |
-| Code change | Focused tests, relevant static checks, and diff review |
-| Data transformation | Compare input/output counts, schema, and representative records |
-| Repository-wide operation | Dry run or preview, bounded summary, then targeted verification |
-| Destructive operation | Confirm scope, preserve recovery point, execute, verify affected targets |
+Do not rerun a successful check unchanged. Repeat only after a relevant change, a flaky result, or evidence that the earlier check was insufficient.
 
-A passing check proves only what that check actually covers. State skipped checks and tool limitations.
+## 6. Maintain a checkpoint only when needed
 
-## 5. Maintain one compact checkpoint
+Use an existing state file if available. Otherwise create a compact checkpoint at phase boundaries or before a likely context reset.
 
-Use an existing project state file or task log when available. Otherwise create a checkpoint only when another session, phase, or context reset is likely.
+Record verified state, not intentions. Include exact paths and identifiers. Keep the checkpoint smaller than the material it replaces.
 
-Suggested structure:
-
-```markdown
-# Task State
-
-- Objective:
-- Active workspace:
-- Relevant inputs:
-- Constraints and decisions:
-- Verified results:
-- Files changed:
-- Unresolved issues:
-- Exact next action:
-```
-
-Keep the checkpoint factual and compact. Link to reports or artifacts instead of copying their contents. Never store credentials or secrets in a checkpoint.
-
-## 6. Avoid common sources of waste
-
-- Reading every file before defining the deliverable.
-- Repeating directory listings and searches that have not become stale.
-- Printing complete logs, datasets, API responses, or diffs when a focused excerpt is sufficient.
-- Rewriting entire documents to change a small passage.
-- Creating a new plan, tracker, script, or report that duplicates an existing one.
-- Reconstructing previous work from conversation history when a verified project state already records it.
-- Compressing exact technical evidence and later having to recover or revalidate it.
+See [Context Lifecycle](context-management.md).
 
 ## 7. Completion report
 
-For substantial work, report only:
+Report:
+1. Deliverable status.
+2. Files or resources created, modified, or removed.
+3. Validation actually performed.
+4. Material blockers or limitations.
+5. Exact next action, if any.
 
-1. What was completed.
-2. Which files or outputs changed.
-3. What was actually verified.
-4. Material limitations or unresolved issues.
-5. The exact next action, if the task is not finished.
+Do not reproduce full logs or narrate every tool call.
 
-Do not include raw logs or a play-by-play of routine tool calls.
+## 8. Anti-patterns
+
+Stop doing these:
+- Repeatedly listing the same directory.
+- Reading large files in full to find one symbol.
+- Repeating the same search with slightly different wording but no new hypothesis.
+- Rewriting whole files for small edits.
+- Running a full suite when a targeted check is sufficient, unless the change's risk demands it.
+- Creating more process documents than the project needs.
+- Producing a lengthy plan instead of doing the first safe step.
+- Continuing after the agreed stop point.
+- Compressing evidence and then spending more work recovering it.
