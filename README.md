@@ -8,7 +8,6 @@ A collection of Claude Skills focused on reducing unnecessary token and context 
 |---|---|
 | [Token Saver](token-saver/) | Advanced general-purpose efficiency across chat, writing, research, analysis, coding, and tool use. Designed for Claude Free and does not depend on paid features. |
 | [Project Token Operator](project-token-operator/) | Project-specific execution: source-of-truth control, phase discipline, selective inspection, compact state, and verified handoffs. |
-| [OSCP Project Operator](oscp-project-operator/) | Dedicated operating rules for the OSCP-Exam-PoC vault and its instructor-facing website. |
 
 ## Install a Skill in Claude
 
@@ -26,7 +25,6 @@ Install each Skill once. Project-specific configuration files are supplied separ
 
 - **Token Saver:** General task efficiency across different kinds of work.
 - **Project Token Operator:** A designated, recurring project that needs controlled phases, source protection, and continuity across chats.
-- **OSCP Project Operator:** Only the OSCP-Exam-PoC project. Prefer it over the generic Project Token Operator inside that specific workspace.
 
 ## Design principle
 
